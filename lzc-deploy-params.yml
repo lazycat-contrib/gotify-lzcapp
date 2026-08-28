@@ -1,0 +1,207 @@
+params:
+  - id: admin_password
+    type: secret
+    name: Administrator password
+    description: Password used to initialize and automatically sign in to the local administrator account.
+    default_value: $random(len=24)
+    optional: false
+
+  - id: timezone
+    type: string
+    name: Time zone
+    description: IANA time zone used by Gotify, for example Asia/Shanghai.
+    default_value: Asia/Shanghai
+    optional: false
+
+  - id: oidc_enabled
+    type: bool
+    name: Enable OIDC
+    description: Enable login through an OpenID Connect identity provider.
+    default_value: "false"
+    optional: false
+
+  - id: oidc_issuer
+    type: string
+    name: OIDC issuer
+    description: OIDC issuer URL used to discover provider endpoints. Required when OIDC is enabled.
+    optional: true
+
+  - id: oidc_client_id
+    type: string
+    name: OIDC client ID
+    description: Client ID registered for Gotify at the identity provider. Required when OIDC is enabled.
+    optional: true
+
+  - id: oidc_client_secret
+    type: secret
+    name: OIDC client secret
+    description: Client secret registered for Gotify at the identity provider. Required when OIDC is enabled.
+    optional: true
+
+  - id: oidc_auto_register
+    type: bool
+    name: Automatically register OIDC users
+    description: Create a local Gotify user automatically on the first successful OIDC login.
+    default_value: "true"
+    optional: false
+
+  - id: oidc_username_claim
+    type: string
+    name: OIDC username claim
+    description: ID-token claim used as the Gotify username, commonly preferred_username or email.
+    default_value: preferred_username
+    optional: false
+
+  - id: oidc_link_by_username
+    type: bool
+    name: Link users by username
+    description: Link an OIDC identity to an existing local user with the same username.
+    default_value: "false"
+    optional: false
+
+  - id: oidc_scopes
+    type: string
+    name: OIDC scopes
+    description: Comma-separated scopes requested from the identity provider.
+    default_value: openid,profile,email
+    optional: false
+
+  - id: oidc_prompt
+    type: string
+    name: OIDC prompt
+    description: Comma-separated prompt values sent to the identity provider; leave empty to omit the parameter.
+    default_value: login
+    optional: true
+
+  - id: oidc_idp_name
+    type: string
+    name: Identity provider name
+    description: Name displayed on the OIDC login button.
+    default_value: OIDC
+    optional: false
+
+  - id: oidc_auto_redirect
+    type: bool
+    name: Automatically redirect to OIDC
+    description: Redirect directly to the identity provider instead of showing the Gotify login page.
+    default_value: "false"
+    optional: false
+
+  - id: oidc_groups_claim
+    type: string
+    name: OIDC groups claim
+    description: Claim containing group memberships; leave empty to disable group mapping.
+    optional: true
+
+  - id: oidc_groups_user
+    type: string
+    name: Allowed user groups
+    description: Comma-separated groups allowed to sign in with user permissions; leave empty to allow all authenticated users.
+    optional: true
+
+  - id: oidc_groups_admin
+    type: string
+    name: Administrator groups
+    description: Comma-separated groups granted Gotify administrator permissions.
+    optional: true
+
+locales:
+  zh:
+    admin_password:
+      name: 管理员密码
+      description: 用于初始化并自动登录本地管理员账号的密码。
+    timezone:
+      name: 时区
+      description: Gotify 使用的 IANA 时区，例如 Asia/Shanghai。
+    oidc_enabled:
+      name: 启用 OIDC
+      description: 是否通过 OpenID Connect 身份提供商登录。
+    oidc_issuer:
+      name: OIDC 颁发者
+      description: 用于发现身份提供商端点的 OIDC Issuer URL；启用 OIDC 时必填。
+    oidc_client_id:
+      name: OIDC 客户端 ID
+      description: 在身份提供商中为 Gotify 注册的客户端 ID；启用 OIDC 时必填。
+    oidc_client_secret:
+      name: OIDC 客户端密钥
+      description: 在身份提供商中为 Gotify 注册的客户端密钥；启用 OIDC 时必填。
+    oidc_auto_register:
+      name: 自动注册 OIDC 用户
+      description: OIDC 用户首次成功登录时自动创建本地 Gotify 用户。
+    oidc_username_claim:
+      name: OIDC 用户名 Claim
+      description: 用作 Gotify 用户名的 ID Token Claim，通常为 preferred_username 或 email。
+    oidc_link_by_username:
+      name: 按用户名关联用户
+      description: 将 OIDC 身份关联到具有相同用户名的现有本地用户。
+    oidc_scopes:
+      name: OIDC Scopes
+      description: 向身份提供商请求的 Scope，使用英文逗号分隔。
+    oidc_prompt:
+      name: OIDC Prompt
+      description: 发送给身份提供商的 Prompt 值，使用英文逗号分隔；留空表示不发送。
+    oidc_idp_name:
+      name: 身份提供商名称
+      description: 显示在 OIDC 登录按钮上的身份提供商名称。
+    oidc_auto_redirect:
+      name: 自动跳转 OIDC
+      description: 不显示 Gotify 登录页，直接跳转到身份提供商。
+    oidc_groups_claim:
+      name: OIDC 群组 Claim
+      description: 包含用户群组的 Claim；留空表示关闭群组映射。
+    oidc_groups_user:
+      name: 允许登录的用户群组
+      description: 允许以普通用户权限登录的群组，使用英文逗号分隔；留空允许所有已认证用户。
+    oidc_groups_admin:
+      name: 管理员群组
+      description: 获得 Gotify 管理员权限的群组，使用英文逗号分隔。
+
+  en:
+    admin_password:
+      name: Administrator password
+      description: Password used to initialize and automatically sign in to the local administrator account.
+    timezone:
+      name: Time zone
+      description: IANA time zone used by Gotify, for example Asia/Shanghai.
+    oidc_enabled:
+      name: Enable OIDC
+      description: Enable login through an OpenID Connect identity provider.
+    oidc_issuer:
+      name: OIDC issuer
+      description: OIDC issuer URL used to discover provider endpoints; required when OIDC is enabled.
+    oidc_client_id:
+      name: OIDC client ID
+      description: Client ID registered for Gotify; required when OIDC is enabled.
+    oidc_client_secret:
+      name: OIDC client secret
+      description: Client secret registered for Gotify; required when OIDC is enabled.
+    oidc_auto_register:
+      name: Automatically register OIDC users
+      description: Create a local Gotify user on the first successful OIDC login.
+    oidc_username_claim:
+      name: OIDC username claim
+      description: ID-token claim used as the Gotify username.
+    oidc_link_by_username:
+      name: Link users by username
+      description: Link an OIDC identity to an existing local user with the same username.
+    oidc_scopes:
+      name: OIDC scopes
+      description: Comma-separated scopes requested from the identity provider.
+    oidc_prompt:
+      name: OIDC prompt
+      description: Comma-separated prompt values sent to the identity provider; leave empty to omit it.
+    oidc_idp_name:
+      name: Identity provider name
+      description: Name displayed on the OIDC login button.
+    oidc_auto_redirect:
+      name: Automatically redirect to OIDC
+      description: Redirect directly to the identity provider instead of showing the Gotify login page.
+    oidc_groups_claim:
+      name: OIDC groups claim
+      description: Claim containing group memberships; leave empty to disable group mapping.
+    oidc_groups_user:
+      name: Allowed user groups
+      description: Comma-separated groups allowed to sign in; leave empty to allow all authenticated users.
+    oidc_groups_admin:
+      name: Administrator groups
+      description: Comma-separated groups granted Gotify administrator permissions.

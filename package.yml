@@ -1,0 +1,20 @@
+package: community.lazycat.app.gotify
+version: 3.1.0
+name: Gotify
+description: A simple server for sending and receiving messages
+min_os_version: 1.5.0
+author: Gotify Team
+license: MIT
+homepage: https://gotify.net
+
+locales:
+  zh:
+    name: Gotify
+    description: 一个用于发送和接收消息的简单服务器
+  en:
+    name: Gotify
+    description: A simple server for sending and receiving messages
+
+permissions:
+  required:
+    - net.internet

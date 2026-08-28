@@ -1,0 +1,54 @@
+application:
+  subdomain: gotify
+  upstreams:
+    - location: /
+      backend: http://gotify:80/
+  public_path:
+    - /
+  {{if not .U.oidc_enabled}}
+  injects:
+    - id: gotify-login-autofill
+      on: browser
+      when:
+        - /#/login
+      do:
+        - src: builtin://simple-inject-password
+          params:
+            user: admin
+            password: "{{ .U.admin_password }}"
+            userSelector: "#username"
+            passwordSelector: "#password"
+            submitSelector: "button.login"
+            autoSubmit: true
+            retryCount: 20
+            retryIntervalMs: 300
+            observerTimeoutMs: 10000
+  {{end}}
+
+services:
+  gotify:
+    # upstream: gotify/server:3.1.0
+    image: docker.1ms.run/gotify/server:3.1.0
+    environment:
+      - "TZ={{ .U.timezone }}"
+      - "GOTIFY_DEFAULTUSER_NAME=admin"
+      - "GOTIFY_DEFAULTUSER_PASS={{ .U.admin_password }}"
+      - "GOTIFY_OIDC_ENABLED={{ .U.oidc_enabled }}"
+      - "GOTIFY_OIDC_ISSUER={{ .U.oidc_issuer }}"
+      - "GOTIFY_OIDC_CLIENTID={{ .U.oidc_client_id }}"
+      - "GOTIFY_OIDC_CLIENTSECRET={{ .U.oidc_client_secret }}"
+      - "GOTIFY_OIDC_REDIRECTURL=https://{{ .S.AppDomain }}/auth/oidc/callback"
+      - "GOTIFY_OIDC_AUTOREGISTER={{ .U.oidc_auto_register }}"
+      - "GOTIFY_OIDC_USERNAMECLAIM={{ .U.oidc_username_claim }}"
+      - "GOTIFY_OIDC_LINK_BY_USERNAME={{ .U.oidc_link_by_username }}"
+      - "GOTIFY_OIDC_SCOPES={{ .U.oidc_scopes }}"
+      - "GOTIFY_OIDC_PROMPT={{ .U.oidc_prompt }}"
+      - "GOTIFY_OIDC_IDP_NAME={{ .U.oidc_idp_name }}"
+      - "GOTIFY_OIDC_AUTO_REDIRECT={{ .U.oidc_auto_redirect }}"
+      - "GOTIFY_OIDC_GROUPS_CLAIM={{ .U.oidc_groups_claim }}"
+      - "GOTIFY_OIDC_GROUPS_USER={{ .U.oidc_groups_user }}"
+      - "GOTIFY_OIDC_GROUPS_ADMIN={{ .U.oidc_groups_admin }}"
+    binds:
+      - /lzcapp/var/data:/app/data
+
+usage: "通过设置向导配置管理员密码、时区和可选的 OIDC 登录；应用数据保存在持久化目录中。"
