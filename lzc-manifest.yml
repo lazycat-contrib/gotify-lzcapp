@@ -24,10 +24,9 @@ application:
             retryIntervalMs: 300
             observerTimeoutMs: 10000
   {{end}}
-
 services:
   gotify:
-    # upstream: gotify/server:3.1.0
+    # upstream: docker.io/gotify/server:3.1.0
     image: docker.1ms.run/gotify/server:3.1.0
     environment:
       - "TZ={{ .U.timezone }}"
@@ -50,5 +49,4 @@ services:
       - "GOTIFY_OIDC_GROUPS_ADMIN={{ .U.oidc_groups_admin }}"
     binds:
       - /lzcapp/var/data:/app/data
-
 usage: "通过设置向导配置管理员密码、时区和可选的 OIDC 登录；应用数据保存在持久化目录中。"
